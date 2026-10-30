@@ -1,0 +1,122 @@
+proxy-providers:
+  provider1:
+    type: http
+    url: ""
+    path: "./proxy_provider/subscribe-provider1.yaml"
+    interval: 86400
+    proxy: DIRECT
+
+proxy-groups:
+- name: hk-proxy
+  type: url-test
+  url: https://www.google.com
+  interval: 300
+  use:
+  - provider1
+  include-all-proxies: true
+  filter: 香港|hk|HK
+
+- name: tw-proxy
+  type: url-test
+  url: https://www.google.com
+  interval: 300
+  use:
+  - provider1
+  include-all-proxies: true
+  filter: 台湾|tw|TW
+
+- name: us-proxy
+  type: url-test
+  url: https://www.google.com
+  interval: 300
+  use:
+  - provider1
+  include-all-proxies: true
+  filter: 美国|us|US
+
+- name: jp-proxy
+  type: url-test
+  url: https://www.google.com
+  interval: 300
+  use:
+  - provider1
+  include-all-proxies: true
+  filter: 日本|jp|JP
+
+- name: sg-proxy
+  type: url-test
+  url: https://www.google.com
+  interval: 300
+  use:
+  - provider1
+  include-all-proxies: true
+  filter: 新加坡|sg|SG
+
+- name: ru-proxy
+  type: url-test
+  url: https://linux-gaming.ru
+  interval: 300
+  use:
+  - provider1
+  include-all-proxies: true
+  filter: 俄罗斯|ru|RU
+
+rule-providers:
+  hk:
+    type: http
+    url: "https://github.com/Philogag/mihomo-ruleset/raw/refs/heads/main/rules/hk.yaml"
+    interval: 600
+    proxy: DIRECT
+    path: ./rule_provider/hk.yaml 
+    behavior: classical
+    format: yaml
+  tw:
+    type: http
+    url: "https://github.com/Philogag/mihomo-ruleset/raw/refs/heads/main/rules/tw.yaml"
+    interval: 600
+    proxy: DIRECT
+    path: ./rule_provider/tw.yaml 
+    behavior: classical
+    format: yaml
+  us:
+    type: http
+    url: "https://github.com/Philogag/mihomo-ruleset/raw/refs/heads/main/rules/us.yaml"
+    interval: 600
+    proxy: DIRECT
+    path: ./rule_provider/us.yaml
+    behavior: classical
+    format: yaml
+  jp:
+    type: http
+    url: "https://github.com/Philogag/mihomo-ruleset/raw/refs/heads/main/rules/jp.yaml"
+    interval: 600
+    proxy: hk-proxy
+    path: ./rule_provider/jp.yaml
+    behavior: classical
+    format: yaml
+  sg:
+    type: http
+    url: "https://github.com/Philogag/mihomo-ruleset/raw/refs/heads/main/rules/sg.yaml"
+    interval: 600
+    proxy: hk-proxy
+    path: ./rule_provider/sg.yaml
+    behavior: classical
+    format: yaml
+  ru:
+    type: http
+    url: "https://github.com/Philogag/mihomo-ruleset/raw/refs/heads/main/rules/ru.yaml"
+    interval: 600
+    proxy: hk-proxy
+    path: ./rule_provider/ru.yaml
+    behavior: classical
+    format: yaml
+
+# white-list mode, order is the priority
+rules:
+  - RULE-SET,us,us-proxy
+  - RULE-SET,jp,jp-proxy
+  - RULE-SET,ru,ru-proxy
+  - RULE-SET,sg,sg-proxy
+  - RULE-SET,tw,tw-proxy
+  - RULE-SET,hk,hk-proxy
+  - MATCH,DIRECT
