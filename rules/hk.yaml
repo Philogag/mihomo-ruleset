@@ -23,6 +23,7 @@ payload:
   - DOMAIN-SUFFIX,commandcode.ai
   - DOMAIN-SUFFIX,fedorapeople.org
   - DOMAIN-SUFFIX,home-assistant.io
+  - DOMAIN-SUFFIX,go.dev
   # Game
   - DOMAIN-SUFFIX,steamcommunity.com
   - DOMAIN-SUFFIX,steamusercontent.com
